@@ -56,19 +56,27 @@ export default {
   },
 
   methods: {
+    getData () {
+      axios.get('http://localhost:8000/jinns/' + this.$route.params.id)
+        .then(res => this.form = res.data)
+    },
     handleSubmit () {
       const errors = validate(this.form, this.rules)
       this.errors = errors ?? {}
 
       if (!isEmpty(errors)) return alert('ada error bang!')
 
-      axios.post('http://localhost:8000/jinns/create', this.form)
+      axios.post('http://localhost:8000/jinns/update', this.form)
         .then(() => {
           this.form = { ...formInit }
           this.$router.push('/jin')
         })
         .catch(err => console.log(err.response))
     }
+  },
+
+  created () {
+    this.getData()
   }
 }
 </script>

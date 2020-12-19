@@ -18,3 +18,6 @@ $router->get('/', function () use ($router) {
 });
 $router->get('/jinns', 'JinnController@index');
 $router->post('/jinns/create', 'JinnController@create');
+$router->get('/jinns/{id}', 'JinnController@show');
+$router->post('/jinns/update', 'JinnController@update');
+$router->delete('/jinns/delete/{id}', 'JinnController@delete');

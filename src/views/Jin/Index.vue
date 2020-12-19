@@ -19,12 +19,12 @@
       >
         <template #table-row="props">
           <span v-if="props.column.field == 'action'">
-            <router-link to="/" class="bg-yellow-500 p-2 text-sm rounded mr-2">
+            <router-link :to="'/jin/update/' + props.row.id" class="bg-yellow-500 p-2 text-sm rounded mr-2">
               edit
             </router-link>
-            <router-link to="/" class="bg-red-500 p-2 text-sm rounded text-white">
+            <button @click="deleteData(props.row.id)" class="bg-red-500 p-2 text-sm rounded text-white">
               delete
-            </router-link>
+            </button>
           </span>
         </template>
       </vue-good-table>
@@ -53,6 +53,10 @@ export default {
     getTableData () {
       axios.get('http://localhost:8000/jinns/')
         .then(({ data }) => this.table_data = data)
+    },
+    deleteData (id) {
+      axios.delete('http://localhost:8000/jinns/delete/' + id)
+        .then(() => this.getTableData())
     }
   },
 
