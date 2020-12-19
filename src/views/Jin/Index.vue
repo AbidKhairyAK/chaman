@@ -4,35 +4,63 @@
     <div class="flex justify-between mb-4">
       <h1 class="text-2xl">Daftar Jin</h1>
 
-      <button class="bg-blue-500 text-white p-2 rounded hover:bg-blue-700">
+      <router-link to="/jin/create" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-700">
         <i class="fas fa-plus"></i>
         Tambah Data
-      </button>
+      </router-link>
     </div>
 
     <hr class="mb-4">
 
     <AppCard title="Table Jin">
-      <table class="w-full">
-        <thead>
-          <tr>
-            <th>nama</th>
-            <th>golongan</th>
-            <th>keahlian</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Slamet</td>
-            <td>dzulumat</td>
-            <td>Bodyguard</td>
-          </tr>
-        </tbody>
-      </table>
+      <vue-good-table
+        :columns="table_columns"
+        :rows="table_data"
+      >
+        <template #table-row="props">
+          <span v-if="props.column.field == 'action'">
+            <router-link to="/" class="bg-yellow-500 p-2 text-sm rounded mr-2">
+              edit
+            </router-link>
+            <router-link to="/" class="bg-red-500 p-2 text-sm rounded text-white">
+              delete
+            </router-link>
+          </span>
+        </template>
+      </vue-good-table>
     </AppCard>
 
   </div>
 </template>
+
+<script>
+import axios from 'axios'
+
+export default {
+  data () {
+    return {
+      table_data: [],
+      table_columns: [
+        { label: 'Nama Jin', field: 'name', filterOptions: { enabled: true } },
+        { label: 'Golongan', field: 'faction', filterOptions: { enabled: true } },
+        { label: 'Kemampuan', field: 'ability', filterOptions: { enabled: true } },
+        { label: 'Action', field: 'action' }
+      ]
+    }
+  },
+
+  methods: {
+    getTableData () {
+      axios.get('http://localhost:8000/jinns/')
+        .then(({ data }) => this.table_data = data)
+    }
+  },
+
+  created () {
+    this.getTableData()
+  },
+}
+</script>
 
 <style scoped>
 td, th {

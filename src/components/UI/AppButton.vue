@@ -1,5 +1,8 @@
 <template>
-  <button class="bg-white border border-blue-500 text-blue-700 py-2 px-8 rounded transition-all duration-500">
+  <button
+    class="bg-white border border-blue-500 text-blue-700 py-2 px-8 rounded transition-all duration-500"
+    v-on="$listeners"
+  >
     {{ title }}
   </button>
 </template>

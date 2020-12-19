@@ -9,7 +9,11 @@ class JinnController extends Controller
     public function index()
     {
         $data = app('db')->table('jinns')->orderBy('name')->get();
+        return $data;
+    }
 
-        return response()->json($data);
+    public function create(Request $request)
+    {
+        app('db')->table('jinns')->insert($request->all());
     }
 }

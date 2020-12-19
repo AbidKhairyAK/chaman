@@ -17,3 +17,4 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 $router->get('/jinns', 'JinnController@index');
+$router->post('/jinns/create', 'JinnController@create');
